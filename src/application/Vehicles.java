@@ -32,7 +32,7 @@ public class Vehicles {
 		return speed;
 	}
 	
-	public String type() {
+	public String getType() {
 		return type;
 	}
 	

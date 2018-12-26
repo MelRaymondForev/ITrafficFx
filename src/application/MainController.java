@@ -1,9 +1,23 @@
 package application;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
-import javafx.application.Platform;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import application.OsmJunction;
+import application.OsmNode;
+import application.OsmRoad;
+import application.OsmTrafficLight;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,9 +26,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
@@ -26,19 +44,55 @@ public class MainController{
 	@FXML private boolean stop = true;
 	@FXML private boolean pause = false;
 	
-
-//	@FXML public ComboBox<String> combobox;
-//	ObservableList<String> list = FXCollections.observableArrayList("Auto", "Truck", "SUV", "Sedan");
-//	public void showTypes(ActionEvent e) {
-//		combobox.setItems(list);
-//	}
-//	
-//	@Override
-//	public void initialize(URL location, ResourceBundle resources) {
-//		combobox.setItems(list);
+	//Selecting location 
+//	@FXML private TextField location;
+//	@FXML void selectLocation(ActionEvent e) {
 //		
 //	}
+	
+	@FXML private ComboBox<String> combobox;
+	ObservableList<String> lists = (ObservableList<String>) FXCollections.observableArrayList("A.C. Cortes", "H. Cortes", "Maguikay flyover",
+																							  "M.C. Briones", "Pacific Mall", "Parkmall",
+																							  "S&R Intersection", "Subangdaku flyover", 
+																							  "United Nations");
+	
+	@FXML void selectLocation(ActionEvent e) {
+		combobox.setItems(lists);
+	}
+	
+	public OSMParser p;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load;
+	@FXML private Canvas map;
+	public void buildRoad(ActionEvent e) {
+			p = new OSMParser();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	private void drawLines(GraphicsContext gc) {
+		gc.strokeLine(35, 67, 35,42);
+		for(Long l:p.roadTable.keySet()) {
+            OsmRoad road = p.roadTable.get(l);
+            float x1,y1,x2,y2;
+            
+            System.out.println(p.roadTable.get(l).name+ "ID: " + p.roadTable.get(l).id);
+            for (int i = 0; i < road.nodes.size()-1; i++) {
+                y1=606-((road.nodes.get(i).getLat()-p.minlat)/(p.maxlat-p.minlat))*606;
+                x1=((road.nodes.get(i).getLon()-p.minlon)/(p.maxlon-p.minlon))*860;
+                y2=606-((road.nodes.get(i+1).getLat()-p.minlat)/(p.maxlat-p.minlat))*606;
+                x2=((road.nodes.get(i+1).getLon()-p.minlon)/(p.maxlon-p.minlon))*860;
+                
+                System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+               
+                gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+                
+            }
+            System.out.println();
+        }
+	}
 
+	//Add Vehicle Window
 	@FXML private Button button;
 	@FXML void handleButtonAction(ActionEvent e) {
 		try {
@@ -67,6 +121,19 @@ public class MainController{
 	public int LOS = 0;
 	public int lane = 0;
 	
+//	
+//	public void DrawShape(ActionEvent event) {
+//		Rectangle vehicle = new Rectangle();
+//		
+//		//Setting the properties of the rectangle 
+//	      vehicle.getX(); 
+//	      vehicle.getY(); 
+//	      vehicle.getHeight(); 
+//	      vehicle.getWidth(); 
+//	         
+//	     
+//	   }  
+	
 	//Calculate Average Speed of Vehicle in a lane
 	public int calculateAvgSpeed(ActionEvent e) {
 		int totalSpeed, AvS = 0;
@@ -78,7 +145,6 @@ public class MainController{
 	        }	
 		return AvS;
 	}
-	
 	
 	
 	//Calculate LOS
@@ -128,6 +194,7 @@ public class MainController{
 	
 	public void resetcarCount() {
 		carCount = 0;
-	}	
+	}
+	
 
 }
