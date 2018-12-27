@@ -7,23 +7,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="1049.0" prefWidth="1380.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="1049.0" prefWidth="1602.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <Button id="Run" layoutX="1309.0" layoutY="33.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Run" />
-      <Button id="Pause" layoutX="1238.0" layoutY="33.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Pause" />
-      <Button id="Stop" layoutX="1167.0" layoutY="33.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Stop" />
-      <Accordion layoutX="11.0" layoutY="324.0" />
+      <Button id="Run" fx:id="start" layoutX="1309.0" layoutY="33.0" mnemonicParsing="false" onAction="#printStart" prefHeight="32.0" prefWidth="71.0" text="Run" />
+      <Button id="Pause" fx:id="pause" layoutX="1238.0" layoutY="33.0" mnemonicParsing="false" onAction="#printPause" prefHeight="32.0" prefWidth="71.0" text="Pause" />
+      <Button id="Stop" fx:id="stop" layoutX="1167.0" layoutY="33.0" mnemonicParsing="false" onAction="#printStop" prefHeight="32.0" prefWidth="71.0" text="Stop" />
+      <Accordion layoutX="11.0" layoutY="324.0" prefHeight="297.0" prefWidth="273.0" />
       <ImageView fitHeight="224.0" fitWidth="222.0" layoutX="-3.0" layoutY="-61.0" pickOnBounds="true" preserveRatio="true">
       <image>
             <Image url="@../images/iTraffic-02.png" />
       </image>
       </ImageView>
-      <Pane layoutX="19.0" layoutY="410.0" prefHeight="331.0" prefWidth="200.0" />
       <Button fx:id="load" layoutX="286.0" layoutY="84.0" mnemonicParsing="false" onAction="#buildRoad" text="Build Map" />
       <Canvas fx:id="map" height="850.0" layoutX="244.0" layoutY="140.0" width="1080.0" />
       <ComboBox fx:id="combobox" layoutX="33.0" layoutY="149.0" onAction="#selectLocation" prefWidth="150.0" promptText="Select Location" />
       <Button fx:id="button" layoutX="66.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Add Vehicles" />
+      <Button id="Pause" fx:id="report" layoutX="1464.0" layoutY="324.0" mnemonicParsing="false" onAction="#showReport" prefHeight="32.0" prefWidth="169.0" text="Show Status Report" />
    </children>
 </AnchorPane>

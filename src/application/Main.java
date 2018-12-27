@@ -14,7 +14,7 @@ public class Main extends Application {
 		try {
 //			BorderPane root = new BorderPane();
 			Parent root = FXMLLoader.load(getClass().getResource("/application/simulator.fxml"));
-			Scene scene = new Scene(root,1450,800);
+			Scene scene = new Scene(root,1750,950);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

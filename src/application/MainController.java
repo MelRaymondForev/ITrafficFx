@@ -33,6 +33,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 
@@ -40,9 +41,21 @@ import javafx.stage.Stage;
 public class MainController{
 	@FXML private Label myMessage; 
 	@FXML private Label simulationReport;
-	@FXML private boolean start = false;
-	@FXML private boolean stop = true;
-	@FXML private boolean pause = false;
+	
+	@FXML private Button start;
+	public void printStart(ActionEvent e) {
+		System.out.println("The Simulator is running...");
+	}
+	
+	@FXML private Button stop;
+	public void printStop(ActionEvent e) {
+		System.out.println("The Simulator is stopping...\n\n\nStarting new Simulation soon...");
+	}
+	
+	@FXML private Button pause;
+	public void printPause(ActionEvent e) {
+		System.out.println("The Simulator is paused right now...");
+	}
 	
 	//Selecting location 
 //	@FXML private TextField location;
@@ -91,6 +104,22 @@ public class MainController{
             System.out.println();
         }
 	}
+	
+	//Show Status Report
+	@FXML private Button report;
+	@FXML void showReport(ActionEvent e) {
+		try {
+			FXMLLoader fx = new FXMLLoader(getClass().getResource("StatusReport.fxml"));
+			Parent root2 = (Parent) fx.load();
+			Stage stage = new Stage();
+			stage.setTitle("SIMULATOR:  STATUS REPORT");
+			stage.setScene(new Scene(root2));
+			stage.show();
+		}catch(Exception event) {
+			System.out.println("Error: Can't load window");
+		}
+	}
+	
 
 	//Add Vehicle Window
 	@FXML private Button button;

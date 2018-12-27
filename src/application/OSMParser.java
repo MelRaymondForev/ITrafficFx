@@ -35,6 +35,14 @@ public class OSMParser{
 			DocumentBuilder builder = factory.newDocumentBuilder();
 //			File rawMap = new File("map2.osm");
 			File rawMap = new File("parkmall.osm");
+//			File rawMap = new File("accortes.osm");
+//			File rawMap = new File("hcortes.osm");
+//			File rawMap = new File("maguikayflyover.osm");
+//			File rawMap = new File("mcbriones.osm");
+//			File rawMap = new File("pacificmall.osm");
+//			File rawMap = new File("s&r.osm");	
+//			File rawMap = new File("subangdaku.osm");
+//			File rawMap = new File("un.osm");
 			Document doc = builder.parse(rawMap);
 			doc.getDocumentElement().normalize();
 			//System.out.println("Root: "+ doc.getDocumentElement().getNodeName());
