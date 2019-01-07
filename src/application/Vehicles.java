@@ -24,31 +24,39 @@ public class Vehicles {
 		return width;
 	}
 	
+	public void setWidth(int newWidth) {
+		width = newWidth;
+	}
+	
 	public int getHeight() {
 		return height;
+	}
+	
+	public void setHeight(int newHeight) {
+		height = newHeight;
 	}
 	
 	public int getSpeed() {
 		return speed;
 	}
 	
+	public void setSpeed(int newSpeed) {
+		speed = newSpeed;
+	}
+	
 	public String getType() {
 		return type;
 	}
 	
-	public String getVehicleType(ActionEvent e) {
-		String type = "";
-		
-		
-		return type;
+	public void setType(String newType) {
+		type = newType;
 	}
 	
-	public int getSpeed(ActionEvent e) {
-		int speed = 0;
+//	public String getVehicleType(ActionEvent e) {
+//		String type = "";
+//		
+//		
+//		return type;
+//	}
 		
-		
-		
-		return speed;
-	}
-	
 }

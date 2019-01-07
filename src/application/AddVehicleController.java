@@ -9,7 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.Node;
 
 public class AddVehicleController implements Initializable{
@@ -29,13 +31,25 @@ public class AddVehicleController implements Initializable{
 		
 	}
 	
+	@FXML public TextField speed;
+	@FXML public TextField width;
+	@FXML public TextField height;
+	@FXML public ColorPicker carColor;
 	@FXML public Button save;
 	public void drawVehicle() {
 		
-		System.out.println("You've successfully created a vehicle.");
-	}
-	
-	    
+		try {
+			Vehicles vehicle = new Vehicles();
+//			vehicle.setSpeed(newSpeed);
+			
+			
+			
+			
+		}catch(Exception e) {
+			System.out.println("There was an error in creating the vehicle.");
+		}
 		
+		System.out.println("You've successfully created a vehicle.");
 	
+	}
 }

@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 
 
 
-public class MainController{
+public class MainController implements Initializable{
 	@FXML private Label myMessage; 
 	@FXML private Label simulationReport;
 	
@@ -64,12 +64,12 @@ public class MainController{
 //	}
 	
 	@FXML private ComboBox<String> combobox;
-	ObservableList<String> lists = (ObservableList<String>) FXCollections.observableArrayList("A.C. Cortes", "H. Cortes", "Maguikay flyover",
+	ObservableList<String> lists = FXCollections.observableArrayList("A.C. Cortes", "H. Cortes", "Maguikay flyover",
 																							  "M.C. Briones", "Pacific Mall", "Parkmall",
 																							  "S&R Intersection", "Subangdaku flyover", 
 																							  "United Nations");
-	
-	@FXML void selectLocation(ActionEvent e) {
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		combobox.setItems(lists);
 	}
 	
@@ -91,10 +91,10 @@ public class MainController{
             
             System.out.println(p.roadTable.get(l).name+ "ID: " + p.roadTable.get(l).id);
             for (int i = 0; i < road.nodes.size()-1; i++) {
-                y1=606-((road.nodes.get(i).getLat()-p.minlat)/(p.maxlat-p.minlat))*606;
-                x1=((road.nodes.get(i).getLon()-p.minlon)/(p.maxlon-p.minlon))*860;
-                y2=606-((road.nodes.get(i+1).getLat()-p.minlat)/(p.maxlat-p.minlat))*606;
-                x2=((road.nodes.get(i+1).getLon()-p.minlon)/(p.maxlon-p.minlon))*860;
+                y1=620-((road.nodes.get(i).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
+                x1=((road.nodes.get(i).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
+                y2=620-((road.nodes.get(i+1).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
+                x2=((road.nodes.get(i+1).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
                 
                 System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
                
@@ -163,6 +163,15 @@ public class MainController{
 //	     
 //	   }  
 	
+	//Get the Speed of an individual vehicle
+	public int getSpeed(ActionEvent e) {
+		int speed = 0;
+		
+		
+		
+		return speed;
+	}
+	
 	//Calculate Average Speed of Vehicle in a lane
 	public int calculateAvgSpeed(ActionEvent e) {
 		int totalSpeed, AvS = 0;
@@ -224,6 +233,5 @@ public class MainController{
 	public void resetcarCount() {
 		carCount = 0;
 	}
-	
 
 }
