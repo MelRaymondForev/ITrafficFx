@@ -14,10 +14,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import application.OSMParser1;
+import application.OSMParser2;
+import application.OSMParser3;
+import application.OSMParser4;
+import application.OSMParser5;
+import application.OSMParser6;
+import application.OSMParser7;
+import application.OSMParser8;
+import application.OSMParser9;
 import application.OsmJunction;
 import application.OsmNode;
 import application.OsmRoad;
 import application.OsmTrafficLight;
+import application.RoadController;
+import application.Vehicles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,29 +42,121 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 
 
-public class MainController implements Initializable{
-	@FXML private Label myMessage; 
-	@FXML private Label simulationReport;
+public class MainController implements Initializable, Runnable{
+//	@FXML private Label myMessage; 
+//	@FXML private Label simulationReport;
+	
+	boolean running = false;
+	long startTime = 0;
+	int carCount, capacity, LOS = 0;
+	ArrayList<Vehicles> vehicles = new ArrayList<>();
+	RoadController road = new RoadController();
+	
 	
 	@FXML private Button start;
-	public void printStart(ActionEvent e) {
+	 ArrayList<Vehicles> cars = new ArrayList<Vehicles>();
+	public void Start(ActionEvent e) {
+		 if (e.getSource().equals(start)){
+	            if (running == false){
+	                running = true;
+	                road.resetCarCount();
+	                startTime = System.currentTimeMillis();
+	                Thread t = new Thread(this);
+	                t.start();
+	            }
+	        }
+	        
 		System.out.println("The Simulator is running...");
 	}
-	
-	@FXML private Button stop;
-	public void printStop(ActionEvent e) {
-		System.out.println("The Simulator is stopping...\n\n\nStarting new Simulation soon...");
+
+	//Show Status Report
+	@FXML private Button report;
+	@FXML void showReport(ActionEvent e) {
+		try {
+			FXMLLoader fx = new FXMLLoader(getClass().getResource("StatusReport.fxml"));
+			Parent root2 = (Parent) fx.load();
+			Stage stage = new Stage();
+			stage.setTitle("SIMULATOR:  STATUS REPORT");
+			stage.setScene(new Scene(root2));
+			stage.show();
+		}catch(Exception event) {
+			System.out.println("Error: Can't load window");
+		}
 	}
 	
 	@FXML private Button pause;
-	public void printPause(ActionEvent e) {
+	public void Pause(ActionEvent e) {
+		
+		if (e.getSource().equals(stop)){
+            running = false;
+        }
+//		if (event.getSource().equals(start)){
+//            if (running == false){
+//                running = true;
+//                road.resetCarCount();
+//                startTime = System.currentTimeMillis();
+//                Thread t = new Thread(this);
+//                t.start();
+//            }
+//        }
+//        if (event.getSource().equals(stop)){
+//            running = false;
+//        }
+//        if (event.getSource().equals(auto)){
+//             Automobile auto = new Automobile(0 ,30);
+//             road.addCar(auto);
+//            
+//            for (int x = 0; x < road.ROAD_WIDTH; x = x + 20) {
+//                for (int y = 40; y < 480; y = y + 120) {
+//                    if (road.collision(x, y, auto) == true){
+//                        auto.setX(x);
+//                        auto.setY(y);
+//                        if (road.collision(x, y, auto) == false){
+//                            frame.repaint();
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//          if (event.getSource().equals(truck)){
+//             Truck truck = new Truck(0, 30);
+//             road.addCar(truck);
+//            
+//            for (int x = 0; x < road.ROAD_WIDTH; x = x + 20) {
+//                for (int y = 40; y < 480; y = y + 120) {
+//                    if (road.collision(x, y, truck) == true){
+//                        truck.setX(x);
+//                        truck.setY(y);
+//                        if (road.collision(x, y, truck) == false){
+//                            frame.repaint();
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//          if (event.getSource().equals(lambo)){
+//             Lamborghini lambo = new Lamborghini(0 ,30);
+//             road.addCar(lambo);
+//            
+//            for (int x = 0; x < road.ROAD_WIDTH; x = x + 20) {
+//                for (int y = 40; y < 480; y = y + 120) {
+//                    if (road.collision(x, y, lambo) == true){
+//                        lambo.setX(x);
+//                        lambo.setY(y);
+//                        if (road.collision(x, y, lambo) == false){
+//                            frame.repaint();
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//        }  
 		System.out.println("The Simulator is paused right now...");
 	}
 	
@@ -73,12 +176,101 @@ public class MainController implements Initializable{
 		combobox.setItems(lists);
 	}
 	
-	public OSMParser p;
+	public OSMParser1 p;
 	//Building Road on map using OSM Nodes
 	@FXML private Button load;
 	@FXML private Canvas map;
+	String location;
 	public void buildRoad(ActionEvent e) {
-			p = new OSMParser();	
+			p = new OSMParser1();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser2 p2;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load2;
+	@FXML private Canvas map2;
+	String location2;
+	public void buildRoad2(ActionEvent e) {
+			p2 = new OSMParser2();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser3 p3;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load3;
+	@FXML private Canvas map3;
+	String location3;
+	public void buildRoad3(ActionEvent e) {
+			p3 = new OSMParser3();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser4 p4;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load4;
+	@FXML private Canvas map4;
+	String location4;
+	public void buildRoad4(ActionEvent e) {
+			p4 = new OSMParser4();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser5 p5;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load5;
+	@FXML private Canvas map5;
+	String location5;
+	public void buildRoad5(ActionEvent e) {
+			p5 = new OSMParser5();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser6 p6;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load6;
+	@FXML private Canvas map6;
+	String location6;
+	public void buildRoad6(ActionEvent e) {
+			p6 = new OSMParser6();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser7 p7;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load7;
+	@FXML private Canvas map7;
+	String location7;
+	public void buildRoad7(ActionEvent e) {
+			p7 = new OSMParser7();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser8 p8;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load8;
+	@FXML private Canvas map8;
+	String location8;
+	public void buildRoad8(ActionEvent e) {
+			p8 = new OSMParser8();	
+			GraphicsContext gc = map.getGraphicsContext2D();
+			drawLines(gc);
+	}
+	
+	public OSMParser9 p9;
+	//Building Road on map using OSM Nodes
+	@FXML private Button load9;
+	@FXML private Canvas map9;
+	String location9;
+	public void buildRoad9(ActionEvent e) {
+			p9 = new OSMParser9();	
 			GraphicsContext gc = map.getGraphicsContext2D();
 			drawLines(gc);
 	}
@@ -98,6 +290,7 @@ public class MainController implements Initializable{
                 
                 System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
                
+//                gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
                 gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
                 
             }
@@ -105,22 +298,12 @@ public class MainController implements Initializable{
         }
 	}
 	
-	//Show Status Report
-	@FXML private Button report;
-	@FXML void showReport(ActionEvent e) {
-		try {
-			FXMLLoader fx = new FXMLLoader(getClass().getResource("StatusReport.fxml"));
-			Parent root2 = (Parent) fx.load();
-			Stage stage = new Stage();
-			stage.setTitle("SIMULATOR:  STATUS REPORT");
-			stage.setScene(new Scene(root2));
-			stage.show();
-		}catch(Exception event) {
-			System.out.println("Error: Can't load window");
-		}
+	//To accept dragged vehicles into map
+	public void dragndrop(ActionEvent e) {
+		
+		
 	}
 	
-
 	//Add Vehicle Window
 	@FXML private Button button;
 	@FXML void handleButtonAction(ActionEvent e) {
@@ -144,24 +327,20 @@ public class MainController implements Initializable{
 //		System.out.println(Integer.toString(myrand));
 //	}
 	
-	ArrayList<Vehicles> vehicles = new ArrayList<>();
-	public int carCount = 0;
-	public int capacity = 0;
-	public int LOS = 0;
-	public int lane = 0;
-	
-//	
-//	public void DrawShape(ActionEvent event) {
-//		Rectangle vehicle = new Rectangle();
-//		
-//		//Setting the properties of the rectangle 
-//	      vehicle.getX(); 
-//	      vehicle.getY(); 
-//	      vehicle.getHeight(); 
-//	      vehicle.getWidth(); 
-//	         
-//	     
-//	   }  
+	@FXML private Button stop;
+	@FXML void Stop(ActionEvent e) {
+		try {
+			FXMLLoader fx = new FXMLLoader(getClass().getResource("AlertNew.fxml"));
+			Parent root2 = (Parent) fx.load();
+			Stage stage = new Stage();
+			stage.setTitle("Alert");
+			stage.setScene(new Scene(root2));
+			stage.show();
+		}catch(Exception event) {
+			System.out.println("Error: Can't load window");
+		}
+//		System.out.println("The Simulator is stopping...\n\n\nStarting new Simulation soon...");
+	} 
 	
 	//Get the Speed of an individual vehicle
 	public int getSpeed(ActionEvent e) {
@@ -226,12 +405,31 @@ public class MainController implements Initializable{
 		return capacity;
 	}
 	
-	public int carCount() {
-		return carCount;
+
+	
+	public void randomforestclassifier() {
+		
+	}
+
+	public void adaboost() {
+		
 	}
 	
-	public void resetcarCount() {
-		carCount = 0;
+	@Override
+	public void run() {
+		 while(running == true){
+//	            road.step();
+//	            carCount = road.getCarCount();
+//	            double throughputCalc = carCount / (double)(System.currentTimeMillis() - startTime);
+//	            throughput.setText("Throughput: " + throughputCalc); 
+//	            frame.repaint();
+//	            try {
+//	                Thread.sleep(100);  
+//	            } catch(Exception e) {
+//	                e.printStackTrace();
+//	            }
+	        }
+		
 	}
 
 }

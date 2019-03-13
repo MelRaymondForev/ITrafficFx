@@ -3,15 +3,17 @@ package application;
 import java.util.List;
 
 public abstract class OsmRoad {
-	long id;
-	String name;
+	public long id;
+	public String name;
 	boolean oneWay;
-	List<OsmNode> nodes;
+	public List<OsmNode> nodes;
+	public String roadRoleForward;
 	
-	OsmRoad(long i, String n, List ns, boolean o){
+	OsmRoad(long i, String n, List ns, boolean o, String role){
 		id = i;
 		name = n;
 		nodes = ns;
-		oneWay=o;
+		oneWay = o;
+		roadRoleForward = role;
 	}
 }

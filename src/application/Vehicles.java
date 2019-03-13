@@ -1,5 +1,7 @@
 package application;
 
+import java.awt.Graphics;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,22 +12,39 @@ public class Vehicles {
 	
 	int x;
 	int y;
-	int width = 0;
+	int width = 3;
 	int height = 0;
 	int speed = 0;
 	String type="";
+	String color="";
+	boolean direction = false;
 	
-	public void Vehicle(int newx, int newy) {
+	public Vehicles(int newx, int newy) {
 		x = newx;
+		y = newy;
+	}	
+	
+	 public void paintMe(Graphics g){
+	    }
+	    
+	 public int getX(){
+       return x;
+     }
+	    
+	 public void setX(int newx){
+	   x = newx;
+	 }
+	      
+	public int getY(){
+	   return y;
+	}
+	    
+	public void setY(int newy){
 		y = newy;
 	}
 	
 	public int getWidth() {
 		return width;
-	}
-	
-	public void setWidth(int newWidth) {
-		width = newWidth;
 	}
 	
 	public int getHeight() {
@@ -50,6 +69,22 @@ public class Vehicles {
 	
 	public void setType(String newType) {
 		type = newType;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+	
+	public void setColor(String newColor) {
+		color = newColor;
+	}
+	
+	public boolean getDirection() {
+		return direction;
+	}
+	
+	public void setDirection(boolean newDirection) {
+		direction = newDirection;
 	}
 	
 //	public String getVehicleType(ActionEvent e) {

@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
-public class OSMParser{
+public class OSMParser9{
 	enum OsmNodeType{
 		DEFAULT, JUNCTION, TRAFFICLIGHT;
 	}
@@ -23,28 +23,28 @@ public class OSMParser{
         Map<Long, OsmNode> nodeTable = new TreeMap();
         Map<Long, OsmRoad> roadTable = new TreeMap();
         float minlat,maxlat,minlon,maxlon ;
+        ArrayList<String> lists  = new ArrayList<String>();
         
-        
-	public OSMParser() {
+	public OSMParser9(){
 		// TODO Auto-generated method stub
 		DocumentBuilderFactory factory =
 		DocumentBuilderFactory.newInstance();
 		
-		
+//		if (lists.equals("A.C. Cortes")) {
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-//			File rawMap = new File("map2.osm");
-//			File rawMap = new File("parkmall.osm");
-//			File rawMap = new File("accortes.osm");
-//			File rawMap = new File("hcortes.osm");
-//			File rawMap = new File("maguikayflyover.osm");
-//			File rawMap = new File("mcbriones.osm");
-//			File rawMap = new File("pacificmall.osm");
-//			File rawMap = new File("s&r.osm");	
-//			File rawMap = new File("subangdaku.osm");
-//			File rawMap = new File("un.osm");
-			File rawMap = new File("sample.osm");
-			Document doc = builder.parse(rawMap);
+			File rawMap1 = new File("map2.osm");
+			File rawMap2 = new File("parkmall.osm");
+			File rawMap3 = new File("accortes.osm");
+			File rawMap4 = new File("hcortes.osm");
+			File rawMap5 = new File("maguikayflyover.osm");
+			File rawMap6 = new File("mcbriones.osm");
+			File rawMap7 = new File("pacificmall.osm");
+			File rawMap8 = new File("s&r.osm");	
+			File rawMap9 = new File("subangdaku.osm");
+			File rawMap10 = new File("un.osm");
+			File rawMap11 = new File("sample.osm");
+			Document doc = builder.parse(rawMap10);
 			doc.getDocumentElement().normalize();
 			//System.out.println("Root: "+ doc.getDocumentElement().getNodeName());
 			NodeList bounds = doc.getElementsByTagName("bounds");
@@ -176,15 +176,15 @@ public class OSMParser{
 					
 					
 					if(roadType==roadType.MOTORWAY)
-						newRoad = new OsmMotorway(roadID,roadName,wayOsmNodes,oneWay);
+						newRoad = new OsmMotorway(roadID,roadName,wayOsmNodes,oneWay, roadName);
 					else if(roadType==roadType.PRIMARY)
-						newRoad = new OsmPrimary(roadID,roadName,wayOsmNodes,oneWay);	
+						newRoad = new OsmPrimary(roadID,roadName,wayOsmNodes,oneWay, roadName);	
 					else if(roadType==roadType.SECONDARY)
-						newRoad = new OsmSecondary(roadID,roadName,wayOsmNodes,oneWay);	
+						newRoad = new OsmSecondary(roadID,roadName,wayOsmNodes,oneWay, roadName);	
 					else if(roadType==roadType.TERTIARY)
-						newRoad = new OsmTertiary(roadID,roadName,wayOsmNodes,oneWay);	
+						newRoad = new OsmTertiary(roadID,roadName,wayOsmNodes,oneWay, roadName);	
 					else 
-						newRoad = new OsmTertiary(roadID,roadName,wayOsmNodes,oneWay);	
+						newRoad = new OsmTertiary(roadID,roadName,wayOsmNodes,oneWay, roadName);	
 					roadTable.put(roadID, newRoad);
 				}
 				
@@ -192,13 +192,7 @@ public class OSMParser{
 				//System.out.println("---------");
 				//System.out.println();
 			}
-			
-				
-			
-			
-                    
-                     
-                    
+		           
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -209,6 +203,7 @@ public class OSMParser{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
         
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StopSimulationController">
+   <children>
+      <Text layoutX="76.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you really want to terminate current " wrappingWidth="564.103515625">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="confirm" layoutX="182.0" layoutY="171.0" mnemonicParsing="false" onAction="#Confirm" prefHeight="35.0" prefWidth="82.0" text="Confirm">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Text layoutX="234.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="simulation?">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="cancel" layoutX="303.0" layoutY="171.0" mnemonicParsing="false" onAction="#CloseWindow" prefHeight="35.0" prefWidth="82.0" text="Cancel">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

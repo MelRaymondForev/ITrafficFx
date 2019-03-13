@@ -15,16 +15,6 @@
 	-fx-border-radius: 8;
 	-fx-font-weight: bold;
 }
-#Run{
-	-fx-background-color: green;
-}
-#Pause{
-	
-	
-}
-#Stop{
-	-fx-background-color: red;
-}
 #Title{
 	-fx-font-size: 80px;
 	-fx-background-color: rgba(0,0,0,0);
