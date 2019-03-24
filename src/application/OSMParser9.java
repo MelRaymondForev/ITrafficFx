@@ -39,10 +39,10 @@ public class OSMParser9{
 			File rawMap4 = new File("hcortes.osm");
 			File rawMap5 = new File("maguikayflyover.osm");
 			File rawMap6 = new File("mcbriones.osm");
-			File rawMap7 = new File("pacificmall.osm");
+			File rawMap7 = new File("un.osm");
 			File rawMap8 = new File("s&r.osm");	
 			File rawMap9 = new File("subangdaku.osm");
-			File rawMap10 = new File("un.osm");
+			File rawMap10 = new File("pacificmall.osm");
 			File rawMap11 = new File("sample.osm");
 			Document doc = builder.parse(rawMap10);
 			doc.getDocumentElement().normalize();

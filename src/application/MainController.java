@@ -29,6 +29,8 @@ import application.OsmRoad;
 import application.OsmTrafficLight;
 import application.RoadController;
 import application.Vehicles;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -166,6 +168,129 @@ public class MainController implements Initializable, Runnable{
 //		
 //	}
 	
+	
+	@FXML private ComboBox<String> location;
+	@FXML private Label selectedLocation; 
+	ObservableList<String> locations = FXCollections.observableArrayList("A.C. Cortes", "H. Cortes", "Maguikay flyover",
+			  "M.C. Briones", "Pacific Mall", "Parkmall",
+			  "S&R Intersection", "Subangdaku flyover", 
+			  "United Nations");
+	
+	@FXML void showLocationMenu(ActionEvent e) {
+	    assert location != null : "fx:id=\"location\" was not injected: check your FXML file 'Menu.fxml'.";
+	    assert selectedLocation != null : "fx:id=\"selectedLocation\" was not injected: check your FXML file 'Menu.fxml'.";
+
+	    selectedLocation.textProperty().bind(location.getSelectionModel().selectedItemProperty());
+
+	    location.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	      @Override public void changed(ObservableValue<? extends String> selected, String selectLoc, String newFruit) {
+	        if (selectLoc != null) {
+	          switch(selectLoc) {
+	            case "A.C. Cortes":  
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator1.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		} 
+	            	break;
+	            case "H.Cortes": 
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator2.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "Maguikay flyover":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator3.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "M.C. Briones":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator4.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "Pacific Mall":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator5.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "Parkmall Intersection":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator6.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "S&R Intersection":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator7.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "Subangdaku flyover":  
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator8.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	            case "United Nations":   
+	            	try {
+	        			FXMLLoader fx = new FXMLLoader(getClass().getResource("simulator9.fxml"));
+	        			Parent root2 = (Parent) fx.load();
+	        			Stage stage = new Stage();
+	        			stage.setScene(new Scene(root2));
+	        			stage.show();
+	        		}catch(Exception event) {
+	        			System.out.println("Error: Can't load window");
+	        		}
+	            	break;
+	          }
+	        } 
+	      }
+	    });
+	}
+	
 	@FXML private ComboBox<String> combobox;
 	ObservableList<String> lists = FXCollections.observableArrayList("A.C. Cortes", "H. Cortes", "Maguikay flyover",
 																							  "M.C. Briones", "Pacific Mall", "Parkmall",
@@ -180,11 +305,10 @@ public class MainController implements Initializable, Runnable{
 	//Building Road on map using OSM Nodes
 	@FXML private Button load;
 	@FXML private Canvas map;
-	String location;
 	public void buildRoad(ActionEvent e) {
 			p = new OSMParser1();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc1 = map.getGraphicsContext2D();
+			drawLines1(gc1);
 	}
 	
 	public OSMParser2 p2;
@@ -194,8 +318,8 @@ public class MainController implements Initializable, Runnable{
 	String location2;
 	public void buildRoad2(ActionEvent e) {
 			p2 = new OSMParser2();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc2 = map2.getGraphicsContext2D();
+			drawLines2(gc2);
 	}
 	
 	public OSMParser3 p3;
@@ -205,8 +329,8 @@ public class MainController implements Initializable, Runnable{
 	String location3;
 	public void buildRoad3(ActionEvent e) {
 			p3 = new OSMParser3();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc3 = map3.getGraphicsContext2D();
+			drawLines3(gc3);
 	}
 	
 	public OSMParser4 p4;
@@ -216,8 +340,8 @@ public class MainController implements Initializable, Runnable{
 	String location4;
 	public void buildRoad4(ActionEvent e) {
 			p4 = new OSMParser4();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc4 = map4.getGraphicsContext2D();
+			drawLines4(gc4);
 	}
 	
 	public OSMParser5 p5;
@@ -227,8 +351,8 @@ public class MainController implements Initializable, Runnable{
 	String location5;
 	public void buildRoad5(ActionEvent e) {
 			p5 = new OSMParser5();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc5 = map5.getGraphicsContext2D();
+			drawLines5(gc5);
 	}
 	
 	public OSMParser6 p6;
@@ -238,8 +362,8 @@ public class MainController implements Initializable, Runnable{
 	String location6;
 	public void buildRoad6(ActionEvent e) {
 			p6 = new OSMParser6();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc6 = map6.getGraphicsContext2D();
+			drawLines6(gc6);
 	}
 	
 	public OSMParser7 p7;
@@ -249,8 +373,8 @@ public class MainController implements Initializable, Runnable{
 	String location7;
 	public void buildRoad7(ActionEvent e) {
 			p7 = new OSMParser7();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc7 = map7.getGraphicsContext2D();
+			drawLines7(gc7);
 	}
 	
 	public OSMParser8 p8;
@@ -260,8 +384,8 @@ public class MainController implements Initializable, Runnable{
 	String location8;
 	public void buildRoad8(ActionEvent e) {
 			p8 = new OSMParser8();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc8 = map8.getGraphicsContext2D();
+			drawLines8(gc8);
 	}
 	
 	public OSMParser9 p9;
@@ -271,27 +395,206 @@ public class MainController implements Initializable, Runnable{
 	String location9;
 	public void buildRoad9(ActionEvent e) {
 			p9 = new OSMParser9();	
-			GraphicsContext gc = map.getGraphicsContext2D();
-			drawLines(gc);
+			GraphicsContext gc9 = map9.getGraphicsContext2D();
+			drawLines9(gc9);
 	}
 	
-	private void drawLines(GraphicsContext gc) {
-		gc.strokeLine(35, 67, 35,42);
-		for(Long l:p.roadTable.keySet()) {
-            OsmRoad road = p.roadTable.get(l);
+	private void drawLines1(GraphicsContext gc) {
+	gc.strokeLine(35, 67, 35,42);
+	for(Long l:p.roadTable.keySet()) {
+        OsmRoad road = p.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p.roadTable.get(l).name+ "ID: " + p.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	
+	private void drawLines2(GraphicsContext gc2) {
+	gc2.strokeLine(35, 67, 35,42);
+	for(Long l:p2.roadTable.keySet()) {
+        OsmRoad road = p2.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p2.roadTable.get(l).name+ "ID: " + p2.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p2.minlat)/(p2.maxlat-p2.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p2.minlon)/(p2.maxlon-p2.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p2.minlat)/(p2.maxlat-p2.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p2.minlon)/(p2.maxlon-p2.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc2.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	
+	private void drawLines3(GraphicsContext gc3) {
+	gc3.strokeLine(35, 67, 35,42);
+	for(Long l:p3.roadTable.keySet()) {
+        OsmRoad road = p3.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p3.roadTable.get(l).name+ "ID: " + p3.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p3.minlat)/(p3.maxlat-p3.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p3.minlon)/(p3.maxlon-p3.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p3.minlat)/(p3.maxlat-p3.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p3.minlon)/(p3.maxlon-p3.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc3.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	private void drawLines4(GraphicsContext gc4) {
+	gc4.strokeLine(35, 67, 35,42);
+	for(Long l:p4.roadTable.keySet()) {
+        OsmRoad road = p4.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p4.roadTable.get(l).name+ "ID: " + p4.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p4.minlat)/(p4.maxlat-p4.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p4.minlon)/(p4.maxlon-p4.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p4.minlat)/(p4.maxlat-p4.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p4.minlon)/(p4.maxlon-p4.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc4.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	private void drawLines5(GraphicsContext gc5) {
+	gc5.strokeLine(35, 67, 35,42);
+	for(Long l:p5.roadTable.keySet()) {
+        OsmRoad road = p5.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p5.roadTable.get(l).name+ "ID: " + p5.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p5.minlat)/(p5.maxlat-p5.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p5.minlon)/(p5.maxlon-p5.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p5.minlat)/(p5.maxlat-p5.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p5.minlon)/(p5.maxlon-p5.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc5.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	private void drawLines6(GraphicsContext gc6) {
+	gc6.strokeLine(35, 67, 35,42);
+	for(Long l:p6.roadTable.keySet()) {
+        OsmRoad road = p6.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p6.roadTable.get(l).name+ "ID: " + p6.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p6.minlat)/(p6.maxlat-p6.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p6.minlon)/(p6.maxlon-p6.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p6.minlat)/(p6.maxlat-p6.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p6.minlon)/(p6.maxlon-p6.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc6.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	private void drawLines7(GraphicsContext gc7) {
+	gc7.strokeLine(35, 67, 35,42);
+	for(Long l:p7.roadTable.keySet()) {
+        OsmRoad road = p7.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p7.roadTable.get(l).name+ "ID: " + p7.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p7.minlat)/(p7.maxlat-p7.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p7.minlon)/(p7.maxlon-p7.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p7.minlat)/(p7.maxlat-p7.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p7.minlon)/(p7.maxlon-p7.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc7.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	private void drawLines8(GraphicsContext gc8) {
+	gc8.strokeLine(35, 67, 35,42);
+	for(Long l:p8.roadTable.keySet()) {
+        OsmRoad road = p8.roadTable.get(l);
+        float x1,y1,x2,y2;
+        
+        System.out.println(p8.roadTable.get(l).name+ "ID: " + p8.roadTable.get(l).id);
+        for (int i = 0; i < road.nodes.size()-1; i++) {
+            y1=620-((road.nodes.get(i).getLat()-p8.minlat)/(p8.maxlat-p8.minlat))*620;
+            x1=((road.nodes.get(i).getLon()-p8.minlon)/(p8.maxlon-p8.minlon))*1250;
+            y2=620-((road.nodes.get(i+1).getLat()-p8.minlat)/(p8.maxlat-p8.minlat))*620;
+            x2=((road.nodes.get(i+1).getLon()-p8.minlon)/(p8.maxlon-p8.minlon))*1250;
+            
+            System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
+           
+//            gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            gc8.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+            
+        }
+        System.out.println();
+    }
+}
+	
+	private void drawLines9(GraphicsContext gc9) {
+		gc9.strokeLine(35, 67, 35,42);
+		for(Long l:p9.roadTable.keySet()) {
+            OsmRoad road = p9.roadTable.get(l);
             float x1,y1,x2,y2;
             
-            System.out.println(p.roadTable.get(l).name+ "ID: " + p.roadTable.get(l).id);
+            System.out.println(p9.roadTable.get(l).name+ "ID: " + p9.roadTable.get(l).id);
             for (int i = 0; i < road.nodes.size()-1; i++) {
-                y1=620-((road.nodes.get(i).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
-                x1=((road.nodes.get(i).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
-                y2=620-((road.nodes.get(i+1).getLat()-p.minlat)/(p.maxlat-p.minlat))*620;
-                x2=((road.nodes.get(i+1).getLon()-p.minlon)/(p.maxlon-p.minlon))*1250;
+                y1=620-((road.nodes.get(i).getLat()-p9.minlat)/(p9.maxlat-p9.minlat))*620;
+                x1=((road.nodes.get(i).getLon()-p9.minlon)/(p9.maxlon-p9.minlon))*1250;
+                y2=620-((road.nodes.get(i+1).getLat()-p9.minlat)/(p9.maxlat-p9.minlat))*620;
+                x2=((road.nodes.get(i+1).getLon()-p9.minlon)/(p9.maxlon-p9.minlon))*1250;
                 
                 System.out.println(Math.round(x1)+","+Math.round(y1)+","+Math.round(x2)+","+Math.round(y2));
                
 //                gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
-                gc.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
+                gc9.strokeLine(Math.round(x1), Math.round(y1), Math.round(x2),Math.round(y2));
                 
             }
             System.out.println();
